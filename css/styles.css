@@ -1,0 +1,158 @@
+
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: raleway;
+}
+
+.main {
+	width: 90%;
+	display: block;
+	margin: 2%;
+}
+
+a {
+	color: blue;
+}
+
+a:visited {
+	color: purple;
+}
+
+.question-link {
+	width: 100%;
+	clear: both;
+	padding: 5px 0 10px 0;
+}
+
+.question-text {
+	padding: 5px 0 5px 0;
+	margin: 0;
+}
+
+/* ------ links ------ */
+
+ol {
+	width: 95%;
+}
+
+li {
+	width: 100%;
+}
+
+/* ------ text area -------- */
+
+textarea {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+/* -------- radio button -------- */
+
+label {
+	padding: 0 10px 0 2px;
+}
+
+.right {
+	float: right;
+}
+
+/* -------- files -------- */
+
+.files {
+	min-width: 50;
+}
+
+/* -------- table -------- */
+
+.tableDiv {
+	width: 100%;
+}
+
+
+table {
+	border: solid 1px blue;
+	width: 100%;
+}
+
+tr {
+	height: 20px;
+}
+
+tr:hover {
+	background-color: #999;
+}
+
+.selected {
+	background-color: orange;
+}
+
+.scrollit{
+	height: 5px;
+	overflow: scroll;
+}
+
+/* override tr hover */
+.header:hover {
+	background-color: transparent;
+}
+
+/* override th hover */
+th:hover {
+	background-color: orange;
+}
+
+th, td {
+	border: solid 1px blue;
+}
+
+.button {
+	clear: none;
+	display: inline-block;
+}
+
+.addRemove {
+	display: inline-block;
+	clear: none;
+}
+
+.add {
+	clear: none;
+	display: inline-block;
+}
+
+.remove {
+	clear: none;
+	display: inline-block;	
+}
+
+.addRemoveText {
+	font-size: 15px;
+	clear: none;
+	display: inline-block;
+}
+
+/* -------- show/hide -------- */
+
+.hidden {
+	display: none;
+	clear: both;
+}
+
+.show {
+	display: block;
+}
+
+.required {
+	border-color: red;
+}
+
+.requiredSubTwo {
+	border-color: red;
+}
+
+
+
+
+

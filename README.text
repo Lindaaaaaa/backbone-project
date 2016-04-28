@@ -1,0 +1,226 @@
+
+STRUCTURE:
+
+
+Main : Collection of Question <ol>
+-------------------------------------------------------------------------------------------------------
+|  model: Question                                                                                    |
+|  type: type for ol                                                                                  |
+|  collection: list of elements                                                                       |
+|                                                                                                     |
+|                                                                                                     |
+|    Question : Model <div>                                                                           |
+|    --------------------------------------------------------------------------------------------     |
+|    |    hidden: if div is initially hidden or not                                             |     |
+|    |    collection: Widget Collection or Collection of Questions                              |     |
+|    |    name: set as class name of div                                                        |     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    |     Widget Collection : Collection of Widgets <li>                                       |     |
+|    |    ---------------------------------------------------------------------------------     |     |
+|    |    |   model: Widget                                                               |     |     |
+|    |    |   collection: list of elements                                                |     |     |
+|    |    |                                                                               |     |     |
+|    |    |                                                                               |     |     |
+|    |    |    Widget : Model <div>                                                       |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |    |    text: question text                                             |     |     |     |
+|    |    |    |    name: set as class name of div                                  |     |     |     |
+|    |    |    |    type: type of widget                                            |     |     |     |
+|    |    |    |          plainText, textBox, table, radioButton, file, checkbox    |     |     |     |
+|    |    |    |    info: other information needed (ex. checkbox items              |     |     |     |
+|    |    |    |    nestedQs: nested questions                                      |     |     |     |
+|    |    |    |    hidden: if div is initially hidden or not                       |     |     |     |
+|    |    |    |    collection: Main                                                |     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |    </div>                                                                     |     |     |
+|    |    |                                                                               |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |                                                                               |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    |                                                                    |     |     |     |
+|    |    |    ----------------------------------------------------------------------     |     |     |
+|    |    |                                                                               |     |     |
+|    |    |                                   ...etc.                                     |     |     |
+|    |    |                                                                               |     |     |
+|    |    ---------------------------------------------------------------------------------     |     |
+|    |     </li>                                                                                |     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    --------------------------------------------------------------------------------------------     |
+|     </div>                                                                                          |
+|                                                                                                     |
+|    --------------------------------------------------------------------------------------------     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    --------------------------------------------------------------------------------------------     |
+|                                                                                                     |
+|                                                                                                     |
+|    --------------------------------------------------------------------------------------------     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    |                                                                                          |     |
+|    --------------------------------------------------------------------------------------------     |
+|                                                                                                     |
+|                                              ...etc.                                                |
+|                                                                                                     |
+|                                                                                                     |
+-------------------------------------------------------------------------------------------------------
+</ol>
+
+
+
+
+/* --------- Main --------------------------------------------------------------------------------------- */
+
+model: Question
+
+
+
+/* --------- MainView ------------------------------------------------------------------------------------ */
+
+tagName: 'ol'
+type: "1" (default)
+collection
+
+initialize: create new Main
+			set type of ol
+render: create new Question View for each Question
+		call renderQuestion
+renderQuestion: render by creating new Question View for the given Question
+
+
+
+/* --------- Question ------------------------------------------------------------------------------------ */
+
+defaults: {
+	hidden: false,
+	collection: WidgetCollection,
+	name: "",
+}
+
+
+
+/* --------- QuestionView--------------------------------------------------------------------------------- */
+
+tagName: 'div'
+className: 'question-link'
+model
+
+initialize: initialize by adding class
+render: render by cerating new WidgetCollectionView or Question
+renderQuestion: render each Question
+
+
+
+/* --------- WidgetCollection------------------------------------------------------------------------------ */
+
+model: Widget
+
+
+
+/* --------- WidgetCollectionView ------------------------------------------------------------------------- */
+
+tagName: 'li'
+collection
+
+initialize: create new Widget
+render: create new Widget View for each Widget
+		call renderWidget
+renderWidget: render by creating new WidgetView
+
+
+
+
+/* --------- Widget ------------------------------------------------------------------------------------ */
+
+defaults: {
+	hidden: false,
+	text: "",
+	name: "",
+	type: "",
+	info: [],
+	nestedQs: [],
+	collection: Main
+}
+
+
+
+/* --------- WidgetView--------------------------------------------------------------------------------- */
+
+tagName: 'div'
+template: _.template("") (default)
+model
+
+initialize: initialize by setting template
+			add class
+render: render template
+		change inner componends depending on widget
+		if there are nested questions, create new MainView
+
+
+
+
+
+
+
+Example:
+
+var questions = [
+{content: [
+  {type: "plainText", text: "Example textBox"},
+  {type: "textBox"}]
+},
+
+{content: [
+  {type: "a", nestedQs: [
+  {content: [
+    {type: "plainText", text: "Example nesting 1"},
+    {type: "checkbox", info: ["Physical", "Emotional", "Social:", "Other:"]},]
+  },
+  {content: [
+    {type: "plainText", text: "Example nesting 2"},
+    {type: "textBox"}]
+  }]
+}]
+},
+
+{content: [
+  {type: "plainText", text: "Example radioButton"},
+  {type: "radioButton", name: "radio1"},
+  {type: "1", nestedQs: [
+  {hidden: true, name: "radio1-yes", content: [
+  {content: [
+    {type: "plainText", text: "Example hidden div"},
+    {type: "radioButton", name: "radio2"},]
+  },
+  {hidden: true, name: "radio2-yes", content: [
+    {type: "plainText", text: "Example hidden div 2"},]
+  },
+  {hidden: true, name: "radio2-no", content: [
+  {type: "plainText", text: "Example hidden div 3"},
+  ]},
+  ]},
+  {hidden: true, name: "radio1-no", content: [
+  {type: "plainText", text: "Example file"},
+  {type: "file"},
+  ]},
+  ]}
+  ]},
+  ];
+
+
+
+
+
+
+
+
